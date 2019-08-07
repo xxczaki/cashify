@@ -21,10 +21,21 @@ test('`to` equals `base`', t => {
 	t.is(cashify.convert(10, {from: 'GBP', to: 'EUR'}), 10.869565217391305);
 });
 
-test('rates do not contain `from`', t => {
+test('`rates` without `base` currency', t => {
+	const rates = {
+		GBP: 0.92,
+		USD: 1.12
+	};
+
+	const cashify = new Cashify({base: 'EUR', rates});
+
+	t.is(cashify.convert(10, {from: 'EUR', to: 'GBP'}), 9.200000000000001);
+});
+
+test('rates do not contain `to`', t => {
 	const error = t.throws(() => {
-		cashify.convert(10, {from: 'PLN', to: 'EUR'});
+		cashify.convert(10, {from: 'EUR', to: 'PHP'});
 	}, Error);
 
-	t.is(error.message, 'Rates do not contain either `from` or `to` currency!');
+	t.is(error.message, '`rates` do not contain `to` currency!');
 });
