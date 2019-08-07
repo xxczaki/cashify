@@ -12,25 +12,27 @@ function hasKey<T>(obj: T, key: keyof any): key is keyof T {
 }
 
 const getRate = ({base, rates, from, to}: Options): number => {
-	if (hasKey(rates, from) && hasKey(rates, to)) {
-	// If `from` equals `base`, return the basic exchange rate for the `to` currency
+	if (hasKey(rates, to)) {
+		// If `from` equals `base`, return the basic exchange rate for the `to` currency
 		if (from === base) {
 			return rates[to];
 		}
 
 		// If `to` equals `base`, return the basic inverse rate of the `from` currency
 		if (to === base) {
+			// @ts-ignore
 			return 1 / rates[from];
 		}
 
 		/**
-	Otherwise, return the `to` rate multipled by the inverse of the `from` rate to get the
-	relative exchange rate between the two currencies
-	*/
+		Otherwise, return the `to` rate multipled by the inverse of the `from` rate to get the
+		relative exchange rate between the two currencies
+		*/
+		// @ts-ignore
 		return rates[to] * (1 / rates[from]);
 	}
 
-	throw new Error('Rates do not contain either `from` or `to` currency!');
+	throw new Error('`rates` do not contain `to` currency!');
 };
 
 class Cashify {
