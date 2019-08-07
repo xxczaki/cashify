@@ -78,7 +78,7 @@ Type: `object`
 
 Object containing currency rates (for example from an API, such as Open Exchange Rates)
 
-### convert(amount, {from, to}) *with constructor*
+### convert(amount, {from, to}) *`with constructor`*
 
 Returns conversion result (`number`)
 
@@ -100,7 +100,7 @@ Type: `string`
 
 Currency to which you want to convert
 
-### convert(amount, {from, to, base, rates}) *without constructor*
+### convert(amount, {from, to, base, rates}) *`without constructor`*
 
 Returns conversion result (`number`)
 
