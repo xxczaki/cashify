@@ -29,7 +29,7 @@ $ npm install cashify
 ## Usage
 
 ```js
-const Cashify = require('cashify');
+const {Cashify} = require('cashify');
 
 const rates = {
 	GBP: 0.92,
@@ -40,6 +40,22 @@ const rates = {
 const cashify = new Cashify({base: 'EUR', rates});
 
 const result = cashify.convert(10, {from: 'EUR', to: 'GBP'});
+
+console.log(result); //=> 9.200000000000001
+```
+
+Using the `Cashify` constructor is not required. Instead, you can use the `convert` function:
+
+```js
+const {convert} = require('cashify');
+
+const rates = {
+	GBP: 0.92,
+	EUR: 1.00,
+	USD: 1.12
+};
+
+const result = convert(10, {from: 'EUR', to: 'GBP', base: 'EUR', rates});
 
 console.log(result); //=> 9.200000000000001
 ```
@@ -62,7 +78,7 @@ Type: `object`
 
 Object containing currency rates (for example from an API, such as Open Exchange Rates)
 
-### convert(amount, {from, to})
+### convert(amount, {from, to}) *with constructor*
 
 Returns conversion result (`number`)
 
@@ -84,18 +100,54 @@ Type: `string`
 
 Currency to which you want to convert
 
+### convert(amount, {from, to, base, rates}) *without constructor*
+
+Returns conversion result (`number`)
+
+##### amount
+
+Type: `number`
+
+Amount of money you want to convert
+
+##### from
+
+Type: `string`
+
+Currency from which you want to convert
+
+##### to
+
+Type: `string`
+
+Currency to which you want to convert
+
+##### base
+
+Type: `string`
+
+Base currency
+
+##### rates
+
+Type: `object`
+
+Object containing currency rates (for example from an API, such as Open Exchange Rates)
+
 ## Migrating from [money.js](http://openexchangerates.github.io/money.js/)
+
+With `Cashify` constructor:
 
 ```diff
 - const fx = require('money');
-+ const Cashify = require('cashify');
++ const {Cashify} = require('cashify');
 
 - fx.base = 'EUR';
 - fx.rates = {
 -	GBP: 0.92,
 -	EUR: 1.00,
 -	USD: 1.12
-- }
+- };
 
 + const rates = {
 +	 GBP: 0.92,
@@ -107,6 +159,29 @@ Currency to which you want to convert
 
 - fx.convert(10, {from: 'GBP', to: 'EUR'});
 + cashify.convert(10, {from: 'GBP', to: 'EUR'});
+```
+
+With `convert` function:
+
+```diff
+- const fx = require('money');
++ const {convert} = require('cashify');
+
+- fx.base = 'EUR';
+- fx.rates = {
+-	GBP: 0.92,
+-	EUR: 1.00,
+-	USD: 1.12
+- };
+
++ const rates = {
++	 GBP: 0.92,
++	 EUR: 1.00,
++	 USD: 1.12
++ };
+
+- fx.convert(10, {from: 'GBP', to: 'EUR'});
++ convert(10, {from: 'GBP', to: 'EUR', base: 'EUR', rates});
 ```
 
 ## License
