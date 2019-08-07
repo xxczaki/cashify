@@ -1,0 +1,64 @@
+{
+	"name": "cashify",
+	"version": "1.0.0",
+	"description": "Lightweight currency conversion library, successor of money.js",
+	"main": "dist/index.js",
+	"module": "dist/index.esm.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist/index.js",
+		"dist/index.esm.js",
+		"dist/index.d.ts"
+	],
+	"author": "Antoni Kepinski <a@kepinski.me> (https://kepinski.me)",
+	"bugs": {
+		"url": "https://github.com/xxczaki/cashify/issues"
+	},
+	"scripts": {
+		"prebuild": "del-cli dist",
+		"esm": "tsc --module esnext && cpy dist/index.js dist --rename index.esm.js",
+		"cjs": "tsc --module commonjs",
+		"build": "npm run esm && npm run cjs",
+		"test": "npm run build && xo && ava",
+		"prepublishOnly": "npm run build"
+	},
+	"engines": {
+		"node": ">=8"
+	},
+	"license": "MIT",
+	"repository": "xxczaki/cashify",
+	"homepage": "https://github.com/xxczaki/cashify",
+	"devDependencies": {
+		"@akepinski/tsconfig": "0.0.2",
+		"@typescript-eslint/eslint-plugin": "^1.13.0",
+		"@typescript-eslint/parser": "^1.13.0",
+		"ava": "^2.2.0",
+		"browser-env": "^3.2.6",
+		"cpy-cli": "^2.0.0",
+		"del-cli": "^2.0.0",
+		"eslint-config-xo-typescript": "^0.15.0",
+		"ts-node": "^8.3.0",
+		"typescript": "^3.5.3",
+		"xo": "*"
+	},
+	"sideEffects": false,
+	"ava": {
+		"babel": false,
+		"compileEnhancements": false,
+		"extensions": [
+			"ts"
+		],
+		"require": [
+			"ts-node/register"
+		]
+	},
+	"xo": {
+		"extends": "xo-typescript",
+		"extensions": [
+			"ts"
+		],
+		"rules": {
+			"ava/no-ignored-test-files": "off"
+		}
+	}
+}
