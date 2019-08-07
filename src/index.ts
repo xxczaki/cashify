@@ -64,4 +64,20 @@ class Cashify {
 	}
 }
 
-export default Cashify;
+/**
+* @param {number} amount Amount of money you want to convert
+* @param {object} options Conversion options
+* @param {string} options.from Currency from which you want to convert
+* @param {string} options.to Currency to which you want to convert
+* @param {string} options.base Base currency
+* @param {string} options.rates Object containing currency rates (for example from an API, such as Open Exchange Rates)
+* @return {number} Conversion result
+*/
+const convert = (amount: number, {from, to, base, rates}: Options): number => {
+	return amount * getRate({base, rates, from, to});
+};
+
+export {
+	Cashify,
+	convert
+};
