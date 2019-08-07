@@ -13,8 +13,8 @@ function hasKey<T>(obj: T, key: keyof any): key is keyof T {
 
 const getRate = ({base, rates, from, to}: Options): number => {
 	if (hasKey(rates, to)) {
-		// If `from` equals `base`, return the basic exchange rate for the `to` currency
-		if (from === base) {
+		// If `from` equals `base` or `from` equals `to`, return the basic exchange rate for the `to` currency
+		if (from === base || from === to) {
 			return rates[to];
 		}
 
