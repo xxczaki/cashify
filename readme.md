@@ -17,7 +17,7 @@ This package was created, because the popular [money.js]() library is:
 - 0 dependencies
 - Actively maintained
 - Well tested
-- [Easy migration from money.js](#migrating-from-money.js)
+- [Easy migration from money.js](#migrating-from-moneyjs)
 - Written in TypeScript
 
 ## Install
