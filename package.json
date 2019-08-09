@@ -79,7 +79,8 @@
 			"ts"
 		],
 		"rules": {
-			"ava/no-ignored-test-files": "off"
+			"ava/no-ignored-test-files": "off",
+			"@typescript-eslint/ban-types": "off"
 		}
 	}
 }
