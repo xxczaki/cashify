@@ -22,7 +22,7 @@ test('`to` equals `base`', t => {
 });
 
 test('`from` equals `to`', t => {
-	t.is(cashify.convert(10, {from: 'EUR', to: 'EUR'}), 10);
+	t.is(cashify.convert(10, {from: 'USD', to: 'USD'}), 10);
 });
 
 test('`from` equals `to`, but `base` is different', t => {
@@ -55,7 +55,7 @@ test('`to` equals `base` (without constructor)', t => {
 });
 
 test('`from` equals `to` (without constructor)', t => {
-	t.is(convert(10, {from: 'EUR', to: 'EUR', base: 'EUR', rates}), 10);
+	t.is(convert(10, {from: 'USD', to: 'USD', base: 'EUR', rates}), 10);
 });
 
 test('`from` equals `to`, but `base` is different (without constructor)', t => {
