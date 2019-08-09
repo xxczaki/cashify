@@ -8,8 +8,8 @@ interface Options {
 }
 
 const getRate = ({base, rates, from, to}: Options): number => {
-	// If `from` equals `base` or `from` equals `to`, return the basic exchange rate for the `to` currency
-	if (from === base || from === to) {
+	// If `from` equals `base`, return the basic exchange rate for the `to` currency
+	if (from === base) {
 		// @ts-ignore
 		return rates[to];
 	}
@@ -53,6 +53,11 @@ class Cashify {
 	convert(amount: number, {from, to}: Omit<Options, 'base' | 'rates'>): number {
 		const {base, rates} = this.options;
 
+		// If `from` equals `to`, return the amount of money
+		if (from === to) {
+			return amount;
+		}
+
 		return amount * getRate({base, rates, from, to});
 	}
 }
@@ -67,6 +72,11 @@ class Cashify {
 * @return {number} Conversion result
 */
 const convert = (amount: number, {from, to, base, rates}: Options): number => {
+	// If `from` equals `to`, return the amount of money
+	if (from === to) {
+		return amount;
+	}
+
 	return amount * getRate({base, rates, from, to});
 };
 
