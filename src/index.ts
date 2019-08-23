@@ -44,7 +44,7 @@ class Cashify {
 	}
 
 	/**
-	* @param {number} amount Amount of money you want to convert
+	* @param {number} amount Amount of money you want to convert (in decimal, e.g., $1 = 1.00)
 	* @param {object} options Conversion options
 	* @param {string} options.from Currency from which you want to convert
 	* @param {string} options.to Currency to which you want to convert
@@ -58,12 +58,12 @@ class Cashify {
 			return amount;
 		}
 
-		return amount * getRate({base, rates, from, to});
+		return (amount * 100) * getRate({base, rates, from, to}) / 100;
 	}
 }
 
 /**
-* @param {number} amount Amount of money you want to convert
+* @param {number} amount Amount of money you want to convert (in decimal, e.g., $1 = 1.00)
 * @param {object} options Conversion options
 * @param {string} options.from Currency from which you want to convert
 * @param {string} options.to Currency to which you want to convert
@@ -77,7 +77,7 @@ const convert = (amount: number, {from, to, base, rates}: Options): number => {
 		return amount;
 	}
 
-	return amount * getRate({base, rates, from, to});
+	return (amount * 100) * getRate({base, rates, from, to}) / 100;
 };
 
 export {
