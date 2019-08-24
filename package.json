@@ -47,12 +47,8 @@
 		"typescript",
 		"money-conversion"
 	],
-	"dependencies": {
-		"big.js": "^5.2.2"
-	},
 	"devDependencies": {
 		"@akepinski/tsconfig": "0.0.2",
-		"@types/big.js": "^4.0.5",
 		"@typescript-eslint/eslint-plugin": "^1.13.0",
 		"@typescript-eslint/parser": "^1.13.0",
 		"ava": "^2.3.0",
