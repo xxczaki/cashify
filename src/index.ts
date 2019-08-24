@@ -1,7 +1,5 @@
 'use strict';
 
-import Big from 'big.js';
-
 interface Options {
 	from: string;
 	to: string;
@@ -9,15 +7,19 @@ interface Options {
 	rates: object;
 }
 
+// Small helper for TypeScript
+function hasKey<T>(obj: T, key: string | number | symbol): key is keyof T {
+	return key in obj;
+}
+
 const getRate = ({base, rates, from, to}: Options): number => {
 	// If `from` equals `base`, return the basic exchange rate for the `to` currency
-	if (from === base) {
-		// @ts-ignore
+	if (from === base && hasKey(rates, to)) {
 		return rates[to];
 	}
 
 	// If `to` equals `base`, return the basic inverse rate of the `from` currency
-	if (to === base) {
+	if (to === base && hasKey(rates, from)) {
 		// @ts-ignore
 		return 1 / rates[from];
 	}
@@ -25,9 +27,12 @@ const getRate = ({base, rates, from, to}: Options): number => {
 	/**
 		Otherwise, return the `to` rate multipled by the inverse of the `from` rate to get the
 		relative exchange rate between the two currencies
-		*/
-	// @ts-ignore
-	return rates[to] * (1 / rates[from]);
+	*/
+	if (hasKey(rates, from) && hasKey(rates, to)) {
+		return rates[to] * (1 / rates[from]);
+	}
+
+	throw new Error('`rates` object does not contain either `from` or `to` currency!');
 };
 
 class Cashify {
@@ -46,7 +51,7 @@ class Cashify {
 	}
 
 	/**
-	* @param {number} amount Amount of money you want to convert (in decimal, e.g., $1 = 1.00)
+	* @param {number} amount Amount of money you want to convert
 	* @param {object} options Conversion options
 	* @param {string} options.from Currency from which you want to convert
 	* @param {string} options.to Currency to which you want to convert
@@ -55,19 +60,17 @@ class Cashify {
 	convert(amount: number, {from, to}: Omit<Options, 'base' | 'rates'>): number {
 		const {base, rates} = this.options;
 
-		const total = new Big(amount);
-
 		// If `from` equals `to`, return the amount of money
 		if (from === to) {
 			return amount;
 		}
 
-		return Number(total.times(getRate({base, rates, from, to})));
+		return (amount * 100) * getRate({base, rates, from, to}) / 100;
 	}
 }
 
 /**
-* @param {number} amount Amount of money you want to convert (in decimal, e.g., $1 = 1.00)
+* @param {number} amount Amount of money you want to convert
 * @param {object} options Conversion options
 * @param {string} options.from Currency from which you want to convert
 * @param {string} options.to Currency to which you want to convert
@@ -76,14 +79,12 @@ class Cashify {
 * @return {number} Conversion result
 */
 const convert = (amount: number, {from, to, base, rates}: Options): number => {
-	const total = new Big(amount);
-
 	// If `from` equals `to`, return the amount of money
 	if (from === to) {
 		return amount;
 	}
 
-	return Number(total.times(getRate({base, rates, from, to})));
+	return (amount * 100) * getRate({base, rates, from, to}) / 100;
 };
 
 export {
