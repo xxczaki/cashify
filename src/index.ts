@@ -1,5 +1,7 @@
 'use strict';
 
+import Big from 'big.js';
+
 interface Options {
 	from: string;
 	to: string;
@@ -53,12 +55,14 @@ class Cashify {
 	convert(amount: number, {from, to}: Omit<Options, 'base' | 'rates'>): number {
 		const {base, rates} = this.options;
 
+		const total = new Big(amount);
+
 		// If `from` equals `to`, return the amount of money
 		if (from === to) {
 			return amount;
 		}
 
-		return (amount * 100) * getRate({base, rates, from, to}) / 100;
+		return Number(total.times(getRate({base, rates, from, to})));
 	}
 }
 
@@ -72,12 +76,14 @@ class Cashify {
 * @return {number} Conversion result
 */
 const convert = (amount: number, {from, to, base, rates}: Options): number => {
+	const total = new Big(amount);
+
 	// If `from` equals `to`, return the amount of money
 	if (from === to) {
 		return amount;
 	}
 
-	return (amount * 100) * getRate({base, rates, from, to}) / 100;
+	return Number(total.times(getRate({base, rates, from, to})));
 };
 
 export {
