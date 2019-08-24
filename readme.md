@@ -14,7 +14,6 @@ This package was created, because the popular [money.js]() library is:
 ## Highlights
 
 - Simple API
-- 0 dependencies
 - Actively maintained
 - Well tested
 - [Easy migration from money.js](#migrating-from-moneyjs)
