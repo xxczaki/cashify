@@ -8,7 +8,7 @@ const rates = {
 };
 
 test('basic conversion', t => {
-	t.is(convert(12, {from: 'USD', to: 'GBP', base: 'EUR', rates}), 9.857142857142858);
+	t.is(convert(12, {from: 'USD', to: 'GBP', base: 'EUR', rates}), 9.857142857142856);
 });
 
 test('`from` equals `base`', t => {
@@ -16,7 +16,7 @@ test('`from` equals `base`', t => {
 });
 
 test('`to` equals `base`', t => {
-	t.is(convert(10, {from: 'GBP', to: 'EUR', base: 'EUR', rates}), 10.869565217391305);
+	t.is(convert(10, {from: 'GBP', to: 'EUR', base: 'EUR', rates}), 10.869565217391303);
 });
 
 test('`from` equals `to`', t => {
@@ -34,4 +34,12 @@ test('`rates` without `base` currency', t => {
 	};
 
 	t.is(convert(10, {from: 'EUR', to: 'GBP', base: 'EUR', rates}), 9.2);
+});
+
+test('`rates` object does not contain either `from` or `to` currency', t => {
+	const error = t.throws(() => {
+		convert(10, {from: 'CHF', to: 'EUR', base: 'EUR', rates});
+	}, Error);
+
+	t.is(error.message, '`rates` object does not contain either `from` or `to` currency!');
 });
