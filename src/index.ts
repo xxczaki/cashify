@@ -20,7 +20,6 @@ const getRate = ({base, rates, from, to}: Options): number => {
 
 	// If `to` equals `base`, return the basic inverse rate of the `from` currency
 	if (to === base && hasKey(rates, from)) {
-		// @ts-ignore
 		return 1 / rates[from];
 	}
 
