@@ -7,25 +7,31 @@ interface Options {
 	rates: object;
 }
 
+// Small helper for TypeScript
+function hasKey<T>(obj: T, key: string | number | symbol): key is keyof T {
+	return key in obj;
+}
+
 const getRate = ({base, rates, from, to}: Options): number => {
 	// If `from` equals `base`, return the basic exchange rate for the `to` currency
-	if (from === base) {
-		// @ts-ignore
+	if (from === base && hasKey(rates, to)) {
 		return rates[to];
 	}
 
 	// If `to` equals `base`, return the basic inverse rate of the `from` currency
-	if (to === base) {
-		// @ts-ignore
+	if (to === base && hasKey(rates, from)) {
 		return 1 / rates[from];
 	}
 
 	/**
 		Otherwise, return the `to` rate multipled by the inverse of the `from` rate to get the
 		relative exchange rate between the two currencies
-		*/
-	// @ts-ignore
-	return rates[to] * (1 / rates[from]);
+	*/
+	if (hasKey(rates, from) && hasKey(rates, to)) {
+		return rates[to] * (1 / rates[from]);
+	}
+
+	throw new Error('`rates` object does not contain either `from` or `to` currency!');
 };
 
 class Cashify {
@@ -44,7 +50,7 @@ class Cashify {
 	}
 
 	/**
-	* @param {number} amount Amount of money you want to convert (in decimal, e.g., $1 = 1.00)
+	* @param {number} amount Amount of money you want to convert
 	* @param {object} options Conversion options
 	* @param {string} options.from Currency from which you want to convert
 	* @param {string} options.to Currency to which you want to convert
@@ -63,7 +69,7 @@ class Cashify {
 }
 
 /**
-* @param {number} amount Amount of money you want to convert (in decimal, e.g., $1 = 1.00)
+* @param {number} amount Amount of money you want to convert
 * @param {object} options Conversion options
 * @param {string} options.from Currency from which you want to convert
 * @param {string} options.to Currency to which you want to convert

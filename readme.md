@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/xxczaki/cashify.svg?branch=master)](https://travis-ci.org/xxczaki/cashify) [![Coverage Status](https://coveralls.io/repos/github/xxczaki/cashify/badge.svg?branch=master)](https://coveralls.io/github/xxczaki/cashify?branch=master) [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo) [![install size](https://packagephobia.now.sh/badge?p=cashify)](https://packagephobia.now.sh/result?p=cashify)
 
-This package was created, because the popular [money.js]() library is:
+This package was created, because the popular [money.js](http://openexchangerates.github.io/money.js/) library is:
 * not maintained (last commit was ~5 years ago)
 * has over 20 issues open
 * does not support TypeScript
