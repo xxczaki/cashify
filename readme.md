@@ -41,7 +41,7 @@ const cashify = new Cashify({base: 'EUR', rates});
 
 const result = cashify.convert(10, {from: 'EUR', to: 'GBP'});
 
-console.log(result); //=> 9.200000000000001
+console.log(result); //=> 9.2
 ```
 
 Using the `Cashify` constructor is not required. Instead, you can use the `convert` function:
@@ -57,7 +57,7 @@ const rates = {
 
 const result = convert(10, {from: 'EUR', to: 'GBP', base: 'EUR', rates});
 
-console.log(result); //=> 9.200000000000001
+console.log(result); //=> 9.2
 ```
 
 ## API
