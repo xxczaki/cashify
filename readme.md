@@ -184,6 +184,12 @@ With `convert` function:
 + convert(10, {from: 'GBP', to: 'EUR', base: 'EUR', rates});
 ```
 
+## Related projects
+
+If you want to handle stuff, like currency formatting, I recommend checking the following projects (they work great with cashify :unicorn:):
+
+* [currency.js](https://github.com/scurker/currency.js/)
+
 ## License
 
 MIT © [Antoni Kepinski](https://kepinski.me)
