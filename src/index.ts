@@ -12,7 +12,7 @@ function hasKey<T>(obj: T, key: string | number | symbol): key is keyof T {
 	return key in obj;
 }
 
-const getRate = ({base, rates, from, to}: Options): number => {
+const getRate = (base: string, rates: object, from: string, to: string): number => {
 	// If `from` equals `base`, return the basic exchange rate for the `to` currency
 	if (from === base && hasKey(rates, to)) {
 		return rates[to];
@@ -64,7 +64,7 @@ class Cashify {
 			return amount;
 		}
 
-		return (amount * 100) * getRate({base, rates, from, to}) / 100;
+		return (amount * 100) * getRate(base, rates, from, to) / 100;
 	}
 }
 
@@ -83,7 +83,7 @@ const convert = (amount: number, {from, to, base, rates}: Options): number => {
 		return amount;
 	}
 
-	return (amount * 100) * getRate({base, rates, from, to}) / 100;
+	return (amount * 100) * getRate(base, rates, from, to) / 100;
 };
 
 export {
