@@ -59,11 +59,6 @@ class Cashify {
 	convert(amount: number, {from, to}: Omit<Options, 'base' | 'rates'>): number {
 		const {base, rates} = this.options;
 
-		// If `from` equals `to`, return the amount of money
-		if (from === to) {
-			return amount;
-		}
-
 		return (amount * 100) * getRate(base, rates, from, to) / 100;
 	}
 }
@@ -78,11 +73,6 @@ class Cashify {
 * @return {number} Conversion result
 */
 const convert = (amount: number, {from, to, base, rates}: Options): number => {
-	// If `from` equals `to`, return the amount of money
-	if (from === to) {
-		return amount;
-	}
-
 	return (amount * 100) * getRate(base, rates, from, to) / 100;
 };
 
