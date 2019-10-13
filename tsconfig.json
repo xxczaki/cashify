@@ -7,7 +7,7 @@
 		"incremental": false,
 		"lib": [
 			"dom"
-		],
+		]
 	},
 	"include": [
 		"src/**/*"
