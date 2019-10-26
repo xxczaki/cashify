@@ -1,5 +1,7 @@
 'use strict';
 
+import {Except} from 'type-fest';
+
 interface Options {
 	from: string;
 	to: string;
@@ -40,9 +42,9 @@ class Cashify {
 	* @param {object} rates Object containing currency rates (for example from an API, such as Open Exchange Rates)
 	*/
 
-	public readonly options: Omit<Options, 'from' | 'to'>;
+	public readonly options: Except<Options, 'from' | 'to'>;
 
-	constructor({base, rates}: Omit<Options, 'from' | 'to'>) {
+	constructor({base, rates}: Except<Options, 'from' | 'to'>) {
 		this.options = {
 			base,
 			rates
@@ -56,7 +58,7 @@ class Cashify {
 	* @param {string} options.to Currency to which you want to convert
 	* @return {number} Conversion result
 	*/
-	convert(amount: number, {from, to}: Omit<Options, 'base' | 'rates'>): number {
+	convert(amount: number, {from, to}: Except<Options, 'base' | 'rates'>): number {
 		const {base, rates} = this.options;
 
 		return (amount * 100) * getRate(base, rates, from, to) / 100;
