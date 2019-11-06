@@ -42,10 +42,10 @@ class Cashify {
 	* @param {object} rates Object containing currency rates (for example from an API, such as Open Exchange Rates)
 	*/
 
-	public readonly options: Except<Options, 'from' | 'to'>;
+	private readonly _options: Except<Options, 'from' | 'to'>;
 
 	constructor({base, rates}: Except<Options, 'from' | 'to'>) {
-		this.options = {
+		this._options = {
 			base,
 			rates
 		};
@@ -59,7 +59,7 @@ class Cashify {
 	* @return {number} Conversion result
 	*/
 	convert(amount: number, {from, to}: Except<Options, 'base' | 'rates'>): number {
-		const {base, rates} = this.options;
+		const {base, rates} = this._options;
 
 		return (amount * 100) * getRate(base, rates, from, to) / 100;
 	}
