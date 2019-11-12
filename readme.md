@@ -8,12 +8,13 @@
 [![install size](https://packagephobia.now.sh/badge?p=cashify)](https://packagephobia.now.sh/result?p=cashify)
 ![minified size](https://img.shields.io/bundlephobia/min/cashify)
 
-This package was created, because the popular [money.js](http://openexchangerates.github.io/money.js/) library is:
-* not maintained (last commit was ~5 years ago)
-* has over 20 issues open
+This package was created, because the popular [money.js](http://openexchangerates.github.io/money.js/) library:
+* is not maintained (last commit was ~5 years ago)
+* has over 20 open issues
 * does not support TypeScript
 * has implicit globals
 * does not have any unit tests
+* [has floating point issues](#floating-point-issues)
 
 ## Highlights
 
@@ -187,6 +188,34 @@ With `convert` function:
 - fx.convert(10, {from: 'GBP', to: 'EUR'});
 + convert(10, {from: 'GBP', to: 'EUR', base: 'EUR', rates});
 ```
+
+## Floating point issues
+
+When working with currencies, decimals only need to be precise up to the smallest cent value while avoiding common floating point errors when performing basic arithmetic.
+
+Let's take a look at the following example:
+
+```js
+const fx = require('money');
+const {Cashify} = require('cashify');
+
+const rates = {
+	GBP: 0.92,
+	USD: 1.12
+};
+
+fx.rates = rates;
+fx.base = 'EUR';
+
+const cashify = new Cashify({base: 'EUR', rates});
+
+fx.convert(10, {from: 'EUR', to: 'GBP'}); //=> 9.200000000000001
+cashify.convert(10, {from: 'EUR', to: 'GBP'}); //=> 9.2
+```
+
+As you can see, money.js doesn't handle currencies correctly and therefore a floating point issues are occuring. Even though there's just a minor discrepancy between the results, if you're converting large amounts, that can add up.
+
+Cashify solves this problem the same way as [currency.js](https://github.com/scurker/currency.js/) - by working with integers behind the scenes. This should be okay for most reasonable values of currencies.
 
 ## Related projects
 
