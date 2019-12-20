@@ -19,7 +19,7 @@
 		"esm": "tsc --module esnext && cpy dist/index.js dist --rename index.esm.js",
 		"cjs": "tsc --module commonjs",
 		"build": "npm run esm && npm run cjs",
-		"test": "npm run build && xo && nyc ava",
+		"test": "xo && nyc ava",
 		"prepublishOnly": "npm run build"
 	},
 	"engines": {
