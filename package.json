@@ -1,6 +1,6 @@
 {
     "name": "cashify",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "Lightweight currency conversion library, successor of money.js",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
