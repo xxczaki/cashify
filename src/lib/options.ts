@@ -1,4 +1,8 @@
-export default interface Options {
+export interface Rates {
+	[name: string]: number;
+}
+
+export interface Options {
 	/**
 	 * Currency from which you want to convert.
 	*/
@@ -17,5 +21,5 @@ export default interface Options {
 	/**
 	 * Object containing currency rates (for example from an API, such as Open Exchange Rates).
 	*/
-	rates: object;
+	rates: Rates;
 }

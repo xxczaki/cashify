@@ -83,29 +83,7 @@ Type: `object`
 
 Object containing currency rates (for example from an API, such as Open Exchange Rates)
 
-### convert(amount, {from, to}) *`with constructor`*
-
-Returns conversion result (`number`)
-
-##### amount
-
-Type: `number`
-
-Amount of money you want to convert
-
-##### from
-
-Type: `string`
-
-Currency from which you want to convert
-
-##### to
-
-Type: `string`
-
-Currency to which you want to convert
-
-### convert(amount, {from, to, base, rates}) *`without constructor`*
+### convert(amount, {from, to, base, rates}) *`with and without constructor`*
 
 Returns conversion result (`number`)
 

@@ -1,4 +1,4 @@
-import Options from './lib/options';
+import {Options} from './lib/options';
 import convert from './convert';
 
 export default class Cashify {

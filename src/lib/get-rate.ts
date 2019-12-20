@@ -1,4 +1,5 @@
 import hasKey from '../utils/has-key';
+import {Rates} from './options';
 
 /**
  * Get the conversion rate.
@@ -8,7 +9,7 @@ import hasKey from '../utils/has-key';
  * @param to Currency to which you want to convert.
  * @return Conversion result.
 */
-export default function getRate(base: string, rates: object, from: string, to: string): number {
+export default function getRate(base: string, rates: Rates, from: string, to: string): number {
 	// If `from` equals `base`, return the basic exchange rate for the `to` currency
 	if (from === base && hasKey(rates, to)) {
 		return rates[to];

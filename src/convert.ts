@@ -1,5 +1,5 @@
 import getRate from './lib/get-rate';
-import Options from './lib/options';
+import {Options} from './lib/options';
 
 /**
 * @param amount Amount of money you want to convert.
