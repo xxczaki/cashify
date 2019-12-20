@@ -6,7 +6,6 @@
 		"sourceMap": false,
 		"incremental": false,
 		"lib": [
-			"dom",
 			"es2018"
 		]
 	},
