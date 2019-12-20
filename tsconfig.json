@@ -2,11 +2,11 @@
 	"extends": "@akepinski/tsconfig",
 	"compilerOptions": {
 		"outDir": "dist",
-		"target": "es5",
+		"target": "es2018",
 		"sourceMap": false,
 		"incremental": false,
 		"lib": [
-			"dom"
+			"es2018"
 		]
 	},
 	"include": [
