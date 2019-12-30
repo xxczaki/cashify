@@ -1,6 +1,6 @@
 {
     "name": "cashify",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "description": "Lightweight currency conversion library, successor of money.js",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
@@ -26,6 +26,10 @@
     "license": "MIT",
     "repository": "xxczaki/cashify",
     "homepage": "https://github.com/xxczaki/cashify",
+    "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/cashify"
+    },
     "keywords": [
         "cashify",
         "cash",
