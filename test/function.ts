@@ -1,5 +1,5 @@
 import test from 'ava';
-import { convert } from '../src';
+import {convert} from '../src';
 
 const rates = {
 	GBP: 0.92,
@@ -8,23 +8,35 @@ const rates = {
 };
 
 test('basic conversion', t => {
-	t.is(convert(12, { from: 'USD', to: 'GBP', base: 'EUR', rates }), 9.857142857142856);
+	t.is(convert(12, {from: 'USD', to: 'GBP', base: 'EUR', rates}), 9.857142857142856);
 });
 
 test('`from` equals `base`', t => {
-	t.is(convert(10, { from: 'EUR', to: 'GBP', base: 'EUR', rates }), 9.2);
+	t.is(convert(10, {from: 'EUR', to: 'GBP', base: 'EUR', rates}), 9.2);
 });
 
 test('`to` equals `base`', t => {
-	t.is(convert(10, { from: 'GBP', to: 'EUR', base: 'EUR', rates }), 10.869565217391303);
+	t.is(convert(10, {from: 'GBP', to: 'EUR', base: 'EUR', rates}), 10.869565217391303);
 });
 
 test('`from` equals `to`', t => {
-	t.is(convert(10, { from: 'USD', to: 'USD', base: 'EUR', rates }), 10);
+	t.is(convert(10, {from: 'USD', to: 'USD', base: 'EUR', rates}), 10);
 });
 
 test('`from` equals `to`, but `base` is different', t => {
-	t.is(convert(10, { from: 'EUR', to: 'EUR', base: 'USD', rates }), 10);
+	t.is(convert(10, {from: 'EUR', to: 'EUR', base: 'USD', rates}), 10);
+});
+
+test('accept `amount` of type string and detect `from` currency', t => {
+	t.is(convert('€10 EUR', {to: 'EUR', base: 'USD', rates}), 10);
+});
+
+test('`from` is not defined', t => {
+	const error = t.throws(() => {
+		convert(10, {to: 'EUR', base: 'USD', rates});
+	}, Error);
+
+	t.is(error.message, 'Please specify the `from` currency!');
 });
 
 test('`rates` without `base` currency', t => {
@@ -33,12 +45,12 @@ test('`rates` without `base` currency', t => {
 		USD: 1.12
 	};
 
-	t.is(convert(10, { from: 'EUR', to: 'GBP', base: 'EUR', rates }), 9.2);
+	t.is(convert(10, {from: 'EUR', to: 'GBP', base: 'EUR', rates}), 9.2);
 });
 
 test('`rates` object does not contain either `from` or `to` currency', t => {
 	const error = t.throws(() => {
-		convert(10, { from: 'CHF', to: 'EUR', base: 'EUR', rates });
+		convert(10, {from: 'CHF', to: 'EUR', base: 'EUR', rates});
 	}, Error);
 
 	t.is(error.message, '`rates` object does not contain either `from` or `to` currency!');
