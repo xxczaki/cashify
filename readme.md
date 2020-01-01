@@ -6,7 +6,33 @@
 [![Coverage Status](https://coveralls.io/repos/github/xxczaki/cashify/badge.svg?branch=master)](https://coveralls.io/github/xxczaki/cashify?branch=master)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 [![install size](https://packagephobia.now.sh/badge?p=cashify)](https://packagephobia.now.sh/result?p=cashify)
-![minified size](https://img.shields.io/bundlephobia/min/cashify)
+![minified size](https://img.shields.io/bundlephobia/minzip/cashify)
+
+- [Motivation](#motivation)
+- [Highlights](#highlights)
+- [Install](#install)
+- [Usage](#usage)
+	- [With constructor](#with-constructor)
+	- [Without constructor](#without-constructor)
+	- [Basic parsing](#basic-parsing)
+- [API](#api)
+	- [Cashify({base, rates})](#cashifybase-rates)
+		- [base](#base)
+		- [rates](#rates)
+	- [convert(amount, {from, to, base, rates})](#convertamount-from-to-base-rates-with-and-without-constructor)
+        - [amount](#amount)
+        - [from](#from)
+        - [to](#to)
+        - [base](#base-1)
+        - [rates](#rates-1)
+- [Migrating from money.js](#migrating-from-moneyjs)
+- [Floating point issues](#floating-point-issues)
+- [Related projects](#related-projects)
+- [License](#license)
+
+---
+
+## Motivation
 
 This package was created, because the popular [money.js](http://openexchangerates.github.io/money.js/) library:
 * is not maintained (last commit was ~5 years ago)
@@ -33,6 +59,8 @@ $ npm install cashify
 
 ## Usage
 
+### With constructor
+
 ```js
 const {Cashify} = require('cashify');
 
@@ -49,7 +77,9 @@ const result = cashify.convert(10, {from: 'EUR', to: 'GBP'});
 console.log(result); //=> 9.2
 ```
 
-Using the `Cashify` constructor is not required. Instead, you can use the `convert` function:
+### Without constructor
+
+Using the `Cashify` constructor is not required. Instead, you can just use the `convert` function:
 
 ```js
 const {convert} = require('cashify');
@@ -63,6 +93,28 @@ const rates = {
 const result = convert(10, {from: 'EUR', to: 'GBP', base: 'EUR', rates});
 
 console.log(result); //=> 9.2
+```
+
+### Basic parsing
+
+Cashify supports basic parsing, so you can pass a `string` to the `amount` argument and the `from` currency will be automatically detected:
+
+```js
+const {Cashify, convert} = require('cashify');
+
+const rates = {
+	GBP: 0.92,
+	EUR: 1.00,
+	USD: 1.12
+};
+
+const cashify = new Cashify({base: 'EUR', rates});
+
+// with constructor
+cashify.convert('€10 EUR', {to: 'GBP'});
+
+// without constructor
+convert('$10 USD', {to: 'GBP', base: 'EUR', rates});
 ```
 
 ## API
@@ -89,15 +141,15 @@ Returns conversion result (`number`)
 
 ##### amount
 
-Type: `number`
+Type: `number` or `string`
 
-Amount of money you want to convert
+Amount of money you want to convert. You can either use just a number or a string with currency code (ex. `€10 EUR` or `$1.99 HKD`). If you choose the second option, you do not need to specify the [`from`](#from) argument, as cashify will detect it.
 
 ##### from
 
 Type: `string`
 
-Currency from which you want to convert
+Currency from which you want to convert. You don't need to specify it if you declare it in the [`amount`](#amount) argument.
 
 ##### to
 
