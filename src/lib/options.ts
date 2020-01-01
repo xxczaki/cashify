@@ -6,7 +6,7 @@ export interface Options {
 	/**
 	 * Currency from which you want to convert.
 	*/
-	from: string;
+	from?: string;
 
 	/**
 	 * Currency to which you want to convert.
