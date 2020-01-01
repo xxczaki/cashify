@@ -15,6 +15,7 @@
 	- [With constructor](#with-constructor)
 	- [Without constructor](#without-constructor)
 	- [Basic parsing](#basic-parsing)
+	- [Integration with currency.js](#integration)
 - [API](#api)
 	- [Cashify({base, rates})](#cashifybase-rates)
 		- [base](#base)
@@ -115,6 +116,30 @@ cashify.convert('€10 EUR', {to: 'GBP'});
 
 // without constructor
 convert('$10 USD', {to: 'GBP', base: 'EUR', rates});
+```
+
+<a id="integration"></a>
+
+### Integration with [currency.js](https://github.com/scurker/currency.js/)
+
+[currency.js](https://github.com/scurker/currency.js/) is a small and lightweight library for working with currency values. It works great with cashify. In the following example we are using it to format the conversion result:
+
+```js
+const {Cashify} = require('cashify');
+const currency = require('currency.js');
+
+const rates = {
+	GBP: 0.92,
+	EUR: 1.00,
+	USD: 1.12
+};
+
+const cashify = new Cashify({base: 'EUR', rates});
+
+const converted = cashify.convert(8635619, {from: 'EUR', to: 'GBP'}); // => 7944769.48
+
+// Format the conversion result
+currency(converted, {symbol: '€', formatWithSymbol: true}).format(); // => €7,944,769.48
 ```
 
 ## API
