@@ -9,8 +9,8 @@ import {Rates} from './options';
  * @param to Currency to which you want to convert.
  * @return Conversion result.
 */
-export default function getRate(base: string, rates: Rates, from: string | undefined, to: string): number {
-	if (from) {
+export default function getRate(base: string, rates: Rates, from: string | undefined, to: string | undefined): number {
+	if (from && to) {
 		// If `from` equals `base`, return the basic exchange rate for the `to` currency
 		if (from === base && hasKey(rates, to)) {
 			return rates[to];
@@ -28,6 +28,6 @@ export default function getRate(base: string, rates: Rates, from: string | undef
 
 		throw new Error('`rates` object does not contain either `from` or `to` currency!');
 	} else {
-		throw new Error('Please specify the `from` currency!');
+		throw new Error('Please specify the `from` and/or `to` currency or use parsing!');
 	}
 }
