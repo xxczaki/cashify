@@ -1,5 +1,6 @@
 import {Options} from './lib/options';
 import convert from './convert';
+import parse from './utils/parser';
 
 export default class Cashify {
 	constructor(public readonly options: Partial<Options>) { }
@@ -10,12 +11,11 @@ export default class Cashify {
 	* @return Conversion result.
 	*/
 	convert(amount: number | string, options?: Partial<Options>): number {
-		// If provided `amount` is a string, get the right amount and detect the `from` currency
+		// If provided `amount` is a string, use parsing
 		if (typeof amount === 'string') {
-			const from = amount.replace(/(?<currency_code>[^A-Za-z])/g, '');
-			amount = parseFloat(amount.replace(/[^0-9-.]/g, ''));
+			const data = parse(amount);
 
-			return convert(amount, {...this.options, from, ...options} as Options);
+			return convert(data.amount, {...this.options, from: data.from, to: data.to, ...options} as Options);
 		}
 
 		return convert(amount, {...this.options, ...options} as Options);

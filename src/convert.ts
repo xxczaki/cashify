@@ -1,5 +1,6 @@
 import getRate from './lib/get-rate';
 import {Options} from './lib/options';
+import parse from './utils/parser';
 
 /**
 * @param amount Amount of money you want to convert.
@@ -7,12 +8,11 @@ import {Options} from './lib/options';
 * @return Conversion result.
 */
 export default function convert(amount: number | string, {from, to, base, rates}: Options): number {
-	// If provided `amount` is a string, get the right amount and detect the `from` currency
+	// If provided `amount` is a string, use parsing
 	if (typeof amount === 'string') {
-		from = amount.replace(/(?<currency_code>[^A-Za-z])/g, '');
-		amount = parseFloat(amount.replace(/[^0-9-.]/g, ''));
+		const data = parse(amount);
 
-		return (amount * 100) * getRate(base, rates, from, to) / 100;
+		return (data.amount * 100) * getRate(base, rates, data.from ?? from, data.to ?? to) / 100;
 	}
 
 	return (amount * 100) * getRate(base, rates, from, to) / 100;
