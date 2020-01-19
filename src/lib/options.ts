@@ -11,7 +11,7 @@ export interface Options {
 	/**
 	 * Currency to which you want to convert.
 	*/
-	to: string;
+	to?: string;
 
 	/**
 	 * Base currency.
