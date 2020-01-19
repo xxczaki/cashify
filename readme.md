@@ -14,7 +14,7 @@
 - [Usage](#usage)
 	- [With constructor](#with-constructor)
 	- [Without constructor](#without-constructor)
-	- [Basic parsing](#basic-parsing)
+	- [Parsing](#parsing)
 	- [Integration with currency.js](#integration)
 - [API](#api)
 	- [Cashify({base, rates})](#cashifybase-rates)
@@ -96,12 +96,12 @@ const result = convert(10, {from: 'EUR', to: 'GBP', base: 'EUR', rates});
 console.log(result); //=> 9.2
 ```
 
-### Basic parsing
+### Parsing
 
-Cashify supports basic parsing, so you can pass a `string` to the `amount` argument and the `from` currency will be automatically detected:
+Cashify supports parsing, so you can pass a `string` to the `amount` argument and the `from` and/or `to` currency will be automatically detected:
 
 ```js
-const {Cashify, convert} = require('cashify');
+const {Cashify} = require('cashify');
 
 const rates = {
 	GBP: 0.92,
@@ -111,12 +111,14 @@ const rates = {
 
 const cashify = new Cashify({base: 'EUR', rates});
 
-// with constructor
+// Basic parsing
 cashify.convert('€10 EUR', {to: 'GBP'});
 
-// without constructor
-convert('$10 USD', {to: 'GBP', base: 'EUR', rates});
+// Full parsing
+cashify.convert('10 EUR to GBP');
 ```
+
+**Note:** If you want to use full parsing, you need to pass a `string` with specific format: `<amount> <from-currency> to <to-currency>`, ex. `10 usd to pln`. The `to` keyword (case insensitive) is especially important. Used letter case doesn't matter, as cashify will automatically convert them to upper case.
 
 <a id="integration"></a>
 
@@ -168,19 +170,19 @@ Returns conversion result (`number`)
 
 Type: `number` or `string`
 
-Amount of money you want to convert. You can either use just a number or a string with currency code (ex. `€10 EUR` or `$1.99 HKD`). If you choose the second option, you do not need to specify the [`from`](#from) argument, as cashify will detect it.
+Amount of money you want to convert. You can either use a `number` or a `string`. If you choose the second option, you can take advantage of [parsing](#parsing) and not specify `from` and/or `to` argument(s).
 
 ##### from
 
 Type: `string`
 
-Currency from which you want to convert. You don't need to specify it if you declare it in the [`amount`](#amount) argument.
+Currency from which you want to convert. You might not need to specify it if you are using [parsing](#parsing).
 
 ##### to
 
 Type: `string`
 
-Currency to which you want to convert
+Currency to which you want to convert. You might not need to specify it if you are using [parsing](#parsing).
 
 ##### base
 
@@ -194,7 +196,7 @@ Type: `object`
 
 Object containing currency rates (for example from an API, such as Open Exchange Rates)
 
-## Migrating from [money.js](http://openexchangerates.github.io/money.js/)
+## Migrating from money.js
 
 With `Cashify` constructor:
 
