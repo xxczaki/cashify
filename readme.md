@@ -26,6 +26,8 @@
         - [to](#to)
         - [base](#base-1)
         - [rates](#rates-1)
+    - [parse(expression)](#parseexpression)
+        - [expression](#expression)
 - [Migrating from money.js](#migrating-from-moneyjs)
 - [Floating point issues](#floating-point-issues)
 - [Related projects](#related-projects)
@@ -195,6 +197,24 @@ Base currency
 Type: `object`
 
 Object containing currency rates (for example from an API, such as Open Exchange Rates)
+
+### parse(expression)
+
+Returns an `object`, which contains parsing results:
+
+```
+{
+	amount: number;
+	from: string | undefined;
+	to: string | undefined;
+}
+```
+
+##### expression
+
+Type: `string`
+
+Expression you want to parse, ex. `10 usd to pln` or `€1.23 eur`
 
 ## Migrating from money.js
 
