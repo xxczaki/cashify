@@ -120,7 +120,19 @@ cashify.convert('€10 EUR', {to: 'GBP'});
 cashify.convert('10 EUR to GBP');
 ```
 
-**Note:** If you want to use full parsing, you need to pass a `string` with specific format: `<amount> <from-currency> to <to-currency>`, ex. `10 usd to pln`. The `to` keyword (case insensitive) is especially important. Used letter case doesn't matter, as cashify will automatically convert them to upper case.
+Alternatively, if you just want to parse a `string` without conversion, you can use the [`parse`](#parseexpression) function, which returns an `object` with parsing results:
+
+```js
+const {parse} = require('cashify');
+
+parse('10 EUR to GBP'); //=> {amount: 10, from: 'EUR', to: 'GBP'}
+```
+
+**Note:** If you want to use full parsing, you need to pass a `string` with specific format:
+
+`<amount> <from-currency> to <to-currency>`, ex. `10 usd to pln`.
+
+The `to` keyword (case insensitive) is especially important. Used letter case doesn't matter, as cashify will automatically convert them to upper case.
 
 <a id="integration"></a>
 
