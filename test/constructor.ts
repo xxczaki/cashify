@@ -45,16 +45,20 @@ test('basic parsing (float)', t => {
 
 test('full parsing (integer)', t => {
 	t.is(cashify.convert('$12 USD TO GBP'), 9.857142857142856);
+	t.is(cashify.convert('$12 USD IN GBP'), 9.857142857142856);
+	t.is(cashify.convert('$12 USD AS GBP'), 9.857142857142856);
 });
 
 test('full parsing (float)', t => {
 	t.is(cashify.convert('1.23 gbp to eur'), 1.3369565217391304);
+	t.is(cashify.convert('1.23 gbp in eur'), 1.3369565217391304);
+	t.is(cashify.convert('1.23 gbp as eur'), 1.3369565217391304);
 });
 
 test('`from` is not defined', t => {
 	const error = t.throws(() => {
 		cashify.convert(10, {to: 'EUR'});
-	}, Error);
+	}, {instanceOf: Error});
 
 	t.is(error.message, 'Please specify the `from` and/or `to` currency or use parsing!');
 });
@@ -73,7 +77,7 @@ test('`rates` without `base` currency', t => {
 test('`rates` object does not contain either `from` or `to` currency', t => {
 	const error = t.throws(() => {
 		cashify.convert(10, {from: 'CHF', to: 'EUR'});
-	}, Error);
+	}, {instanceOf: Error});
 
 	t.is(error.message, '`rates` object does not contain either `from` or `to` currency!');
 });
@@ -81,7 +85,7 @@ test('`rates` object does not contain either `from` or `to` currency', t => {
 test('parsing without a correct amount', t => {
 	const error = t.throws(() => {
 		cashify.convert('');
-	}, Error);
+	}, {instanceOf: Error});
 
 	t.is(error.message, 'Could not parse the `amount` argument. Make sure it includes at least a valid amount.');
 });
