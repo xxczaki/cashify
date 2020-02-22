@@ -15,11 +15,11 @@ export default function parse(expression: string): Options {
 	let to;
 
 	// Search for `to` keyword (case insensitive) to split the expression into 2 parts
-	if (/to/i.exec(expression)) {
-		const firstPart = expression.slice(0, expression.search(/to/i)).toUpperCase().trim();
+	if (/to|in|into|as/i.exec(expression)) {
+		const firstPart = expression.slice(0, expression.search(/to|in|as/i)).toUpperCase().trim();
 
 		from = firstPart.replace(/(?<currency_code>[^A-Za-z])/g, '');
-		to = expression.slice(expression.search(/to/i) + 2).toUpperCase().trim();
+		to = expression.slice(expression.search(/to|in|as/i) + 2).toUpperCase().trim();
 	} else {
 		from = expression.replace(/(?<currency_code>[^A-Za-z])/g, '');
 	}
