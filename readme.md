@@ -130,9 +130,13 @@ parse('10 EUR to GBP'); //=> {amount: 10, from: 'EUR', to: 'GBP'}
 
 **Note:** If you want to use full parsing, you need to pass a `string` with specific format:
 
-`<amount> <from-currency> to <to-currency>`, ex. `10 usd to pln`.
+```
+10 usd to pln
+12.5 GBP in EUR
+3.1415 eur as chf
+```
 
-The `to` keyword (case insensitive) is especially important. Used letter case doesn't matter, as cashify will automatically convert them to upper case.
+You can use `to`, `in` or `as` to separate the expression (case insensitive). Used currencies name case doesn't matter, as cashify will automatically convert them to upper case.
 
 <a id="integration"></a>
 
