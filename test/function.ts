@@ -3,7 +3,7 @@ import {convert} from '../src';
 
 const rates = {
 	GBP: 0.92,
-	EUR: 1.00,
+	EUR: 1,
 	USD: 1.12
 };
 
