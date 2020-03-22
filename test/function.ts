@@ -31,6 +31,10 @@ test('accept `amount` of type `string`', t => {
 	t.is(convert('12', {from: 'USD', to: 'GBP', base: 'EUR', rates}), 9.857142857142856);
 });
 
+test('`amount` equals 0', t => {
+	t.is(convert(0, {from: 'USD', to: 'GBP', base: 'EUR', rates}), 0);
+});
+
 test('basic parsing (integer)', t => {
 	t.is(convert('$12 USD', {to: 'GBP', base: 'EUR', rates}), 9.857142857142856);
 });
