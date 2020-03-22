@@ -10,7 +10,7 @@ interface Options {
 * @return Object with parsing results
 */
 export default function parse(expression: string): Options {
-	const amount = parseFloat(expression.replace(/[^0-9-.]/g, '')) || undefined;
+	const amount = parseFloat(expression.replace(/[^\d-.]/g, '')) || undefined;
 	let from;
 	let to;
 
