@@ -313,9 +313,8 @@ Cashify solves this problem the same way as [currency.js](https://github.com/scu
 
 ## Related projects
 
-If you want to handle stuff, like currency formatting, I recommend checking the following projects (they work great with cashify :unicorn:):
-
-* [currency.js](https://github.com/scurker/currency.js/)
+* [currency.js](https://github.com/scurker/currency.js/) - Lightweight javascript library for working with currency values.
+* [cashify-rs](https://github.com/xxczaki/cashify-rs) - Cashify port for Rust.
 
 ## License
 
