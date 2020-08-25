@@ -6,8 +6,12 @@ interface Options {
 
 /**
 * Expression parser
-* @param expression Expression you want to parse, ex. `10 usd to pln` or `€1.23 eur`
-* @return Object with parsing results
+*
+* @param {string} expression - Expression you want to parse, ex. `10 usd to pln` or `€1.23 eur`
+* @return {Object} Object with parsing results
+*
+* @example
+* parse('10 EUR to GBP'); //=> {amount: 10, from: 'EUR', to: 'GBP'}
 */
 export default function parse(expression: string): Options {
 	const amount = Number.parseFloat(expression.replace(/[^\d-.]/g, '')) || undefined;

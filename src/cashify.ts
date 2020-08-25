@@ -3,12 +3,29 @@ import convert from './convert';
 import parse from './utils/parser';
 
 export default class Cashify {
+	/**
+	* @constructor
+	* @param {Object} [options] Conversion options.
+	*/
 	constructor(public readonly options: Partial<Options>) { }
 
 	/**
-	* @param amount Amount of money you want to convert.
-	* @param options Conversion options.
-	* @return Conversion result.
+	* Function, which converts currencies based on provided rates.
+	*
+	* @param {number | string} amount - Amount of money you want to convert.
+	* @param {Object} [options] - Conversion options.
+	* @return {number} Conversion result.
+	*
+	* @example
+	* const rates = {
+	* 	GBP: 0.92,
+	* 	EUR: 1.00,
+	* 	USD: 1.12
+	* };
+	*
+	* const cashify = new Cashify({base: 'EUR', rates});
+	*
+	* cashify.convert(10, {from: 'EUR', to: 'GBP'}); //=> 9.2
 	*/
 	convert(amount: number | string, options?: Partial<Options>): number {
 		// If provided `amount` is a string, use parsing
