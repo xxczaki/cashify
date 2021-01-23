@@ -19,9 +19,13 @@ import parse from './utils/parser';
  * convert(10, {from: 'EUR', to: 'GBP', base: 'EUR', rates}); //=> 9.2
  */
 export default function convert(amount: number | string, {from, to, base, rates}: Options): number {
-	if (amount === '0') return 0;
 	// If provided `amount` is a string, use parsing
 	if (typeof amount === 'string') {
+        
+        // Don't bother parsing '0' - parse does not support it
+        if (amount.trim() === '0')
+            return 0;
+
 		const data = parse(amount);
 
 		return (data.amount * 100) * getRate(base, rates, data.from ?? from, data.to ?? to) / 100;
