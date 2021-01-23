@@ -14,7 +14,7 @@ interface Options {
 * parse('10 EUR to GBP'); //=> {amount: 10, from: 'EUR', to: 'GBP'}
 */
 export default function parse(expression: string): Options {
-	const amount = Number.parseFloat(expression.replace(/[^\d-.]/g, '')) || undefined;
+	const amount = Number(expression.replace(/[^\d-.]/g, ''));
 	let from;
 	let to;
 
@@ -28,8 +28,8 @@ export default function parse(expression: string): Options {
 		from = expression.replace(/[^A-Za-z]/g, '');
 	}
 
-	if (amount === undefined) {
-		throw new Error('Could not parse the `amount` argument. Make sure it includes at least a valid amount.');
+	if (Number.isNaN(amount) || expression.trim().length === 0) {
+		throw new TypeError('Could not parse the `amount` argument. Make sure it includes at least a valid amount.');
 	}
 
 	return {
