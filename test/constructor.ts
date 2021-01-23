@@ -35,6 +35,10 @@ test('accept `amount` of type `string`', t => {
 	t.is(cashify.convert('12', {from: 'USD', to: 'GBP'}), 9.857142857142856);
 });
 
+test('edge case: accept `amount` of type `string`, equal to 0', t => {
+	t.is(cashify.convert('0', {from: 'USD', to: 'GBP'}), 0);
+});
+
 test('`amount` equals 0', t => {
 	t.is(cashify.convert(0, {from: 'USD', to: 'GBP'}), 0);
 });
@@ -89,7 +93,7 @@ test('`rates` object does not contain either `from` or `to` currency', t => {
 test('parsing without a correct amount', t => {
 	const error = t.throws(() => {
 		cashify.convert('');
-	}, {instanceOf: Error});
+	}, {instanceOf: TypeError});
 
 	t.is(error.message, 'Could not parse the `amount` argument. Make sure it includes at least a valid amount.');
 });
