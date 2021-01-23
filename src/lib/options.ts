@@ -1,6 +1,4 @@
-export interface Rates {
-	[name: string]: number;
-}
+export type Rates = Record<string, number>;
 
 export interface Options {
 	/**

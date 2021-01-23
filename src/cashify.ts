@@ -7,7 +7,7 @@ export default class Cashify {
 	* @constructor
 	* @param {Object} [options] Conversion options.
 	*/
-	constructor(public readonly options: Partial<Options>) { }
+	constructor(public readonly options: Partial<Options>) {}
 
 	/**
 	* Function, which converts currencies based on provided rates.
