@@ -83,7 +83,7 @@ test('`rates` object does not contain either `from` or `to` currency', t => {
 test('parsing without a correct amount', t => {
 	const error = t.throws(() => {
 		convert('', {base: 'EUR', rates});
-	}, {instanceOf: Error});
+	}, {instanceOf: TypeError});
 
 	t.is(error.message, 'Could not parse the `amount` argument. Make sure it includes at least a valid amount.');
 });
