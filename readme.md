@@ -313,6 +313,7 @@ Cashify solves this problem the same way as [currency.js](https://github.com/scu
 
 ## Related projects
 
+* [nestjs-cashify](https://github.com/vahidvdn/nestjs-cashify) - nodejs cashify module for nestjs
 * [currency.js](https://github.com/scurker/currency.js/) - Lightweight javascript library for working with currency values.
 * [cashify-rs](https://github.com/xxczaki/cashify-rs) - Cashify port for Rust.
 
