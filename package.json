@@ -15,7 +15,7 @@
     "scripts": {
         "prebuild": "del-cli dist",
         "build": "tsc",
-        "test": "xo && c8 --reporter=['lcov'] ava",
+        "test": "xo && c8 ava",
         "prepublishOnly": "npm run build"
     },
     "engines": {
