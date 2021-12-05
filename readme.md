@@ -2,7 +2,7 @@
 
 > Lightweight currency conversion library, successor of money.js
 
-[![Build Status](https://travis-ci.org/xxczaki/cashify.svg?branch=master)](https://travis-ci.org/xxczaki/cashify)
+[![Build Status](https://github.com/xxczaki/cashify/workflows/CI/badge.svg)](https://github.com/xxczaki/cashify/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/xxczaki/cashify/badge.svg?branch=master)](https://coveralls.io/github/xxczaki/cashify?branch=master)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 [![install size](https://packagephobia.now.sh/badge?p=cashify)](https://packagephobia.now.sh/result?p=cashify)
@@ -16,17 +16,20 @@
 	- [With constructor](#with-constructor)
 	- [Without constructor](#without-constructor)
 	- [Parsing](#parsing)
-	- [Integration with currency.js](#integration)
+	- [Integration with big.js](#integration-bigjs)
+	- [Integration with currency.js](#integration-currencyjs)
 - [API](#api)
 	- [Cashify({base, rates})](#cashifybase-rates)
 		- [base](#base)
 		- [rates](#rates)
+		- [BigJs](#bigjs)
 	- [convert(amount, {from, to, base, rates})](#convertamount-from-to-base-rates-with-and-without-constructor)
         - [amount](#amount)
         - [from](#from)
         - [to](#to)
         - [base](#base-1)
         - [rates](#rates-1)
+        - [BigJs](#bigjs-1)
     - [parse(expression)](#parseexpression)
         - [expression](#expression)
 - [Migrating from money.js](#migrating-from-moneyjs)
@@ -51,9 +54,10 @@ This package was created, because the popular [money.js](http://openexchangerate
 - Simple API
 - 0 dependencies
 - Actively maintained
-- Well tested
+- Well tested and documented
 - [Easy migration from money.js](#migrating-from-moneyjs)
 - Written in TypeScript
+- ESM-only
 
 ## Install
 
@@ -61,12 +65,14 @@ This package was created, because the popular [money.js](http://openexchangerate
 $ npm install cashify
 ```
 
+**Please note that starting with version `3.0.0` this package is ESM-only and thus requires Node.js v14 or higher.**
+
 ## Usage
 
 ### With constructor
 
 ```js
-const {Cashify} = require('cashify');
+import {Cashify} from 'cashify';
 
 const rates = {
 	GBP: 0.92,
@@ -86,7 +92,7 @@ console.log(result); //=> 9.2
 Using the `Cashify` constructor is not required. Instead, you can just use the `convert` function:
 
 ```js
-const {convert} = require('cashify');
+import {convert} from 'cashify';
 
 const rates = {
 	GBP: 0.92,
@@ -104,7 +110,7 @@ console.log(result); //=> 9.2
 Cashify supports parsing, so you can pass a `string` to the `amount` argument and the `from` and/or `to` currency will be automatically detected:
 
 ```js
-const {Cashify} = require('cashify');
+import {Cashify} from 'cashify';
 
 const rates = {
 	GBP: 0.92,
@@ -121,15 +127,15 @@ cashify.convert('€10 EUR', {to: 'GBP'});
 cashify.convert('10 EUR to GBP');
 ```
 
-Alternatively, if you just want to parse a `string` without conversion, you can use the [`parse`](#parseexpression) function, which returns an `object` with parsing results:
+Alternatively, if you just want to parse a `string` without conversion you can use the [`parse`](#parseexpression) function which returns an `object` with parsing results:
 
 ```js
-const {parse} = require('cashify');
+import {parse} from 'cashify';
 
 parse('10 EUR to GBP'); //=> {amount: 10, from: 'EUR', to: 'GBP'}
 ```
 
-**Note:** If you want to use full parsing, you need to pass a `string` with specific format:
+**Note:** If you want to use full parsing, you need to pass a `string` in a specific format:
 
 ```
 10 usd to pln
@@ -139,15 +145,41 @@ parse('10 EUR to GBP'); //=> {amount: 10, from: 'EUR', to: 'GBP'}
 
 You can use `to`, `in` or `as` to separate the expression (case insensitive). Used currencies name case doesn't matter, as cashify will automatically convert them to upper case.
 
-<a id="integration"></a>
+<a id="integration-bigjs"></a>
+
+### Integration with [big.js](https://github.com/MikeMcl/big.js/)
+
+[big.js](https://github.com/scurker/currency.js/) is a small JavaScript library for arbitrary-precision decimal arithmetic. You can use it with cashify to make sure you won't run into floating point issues:
+
+```js
+import {Cashify} from 'cashify';
+import Big from 'big.js';
+
+const rates = {
+	EUR: 0.8235,
+	USD: 1
+};
+
+const cashify = new Cashify({base: 'USD', rates});
+
+const result = cashify.convert(1, {
+	from: 'USD',
+	to: 'EUR',
+	BigJs: Big
+});
+
+console.log(result); //=> 8.235 (without big.js you would get something like 0.8234999999999999)
+```
+
+<a id="integration-currencyjs"></a>
 
 ### Integration with [currency.js](https://github.com/scurker/currency.js/)
 
-[currency.js](https://github.com/scurker/currency.js/) is a small and lightweight library for working with currency values. It works great with cashify. In the following example we are using it to format the conversion result:
+[currency.js](https://github.com/scurker/currency.js/) is a small and lightweight library for working with currency values. It integrates well with cashify. In the following example we are using it to format the conversion result:
 
 ```js
-const {Cashify} = require('cashify');
-const currency = require('currency.js');
+import {Cashify} from 'cashify';
+import currency from 'currency.js';
 
 const rates = {
 	GBP: 0.92,
@@ -165,25 +197,31 @@ currency(converted, {symbol: '€', formatWithSymbol: true}).format(); // => €
 
 ## API
 
-### Cashify({base, rates})
+### Cashify({base, rates, BigJs})
 
-Constructor
+Constructor.
 
 ##### base
 
 Type: `string`
 
-Base currency
+The base currency.
 
 ##### rates
 
 Type: `object`
 
-Object containing currency rates (for example from an API, such as Open Exchange Rates)
+An object containing currency rates (for example from an API, such as Open Exchange Rates).
+
+##### BigJs
+
+Type: [big.js](https://github.com/MikeMcl/big.js/) constructor
+
+See [integration with big.js](#integration-bigjs).
 
 ### convert(amount, {from, to, base, rates}) *`with and without constructor`*
 
-Returns conversion result (`number`)
+Returns conversion result (`number`).
 
 ##### amount
 
@@ -207,13 +245,19 @@ Currency to which you want to convert. You might not need to specify it if you a
 
 Type: `string`
 
-Base currency
+The base currency.
 
 ##### rates
 
 Type: `object`
 
-Object containing currency rates (for example from an API, such as Open Exchange Rates)
+An object containing currency rates (for example from an API, such as Open Exchange Rates).
+
+##### BigJs
+
+Type: [big.js](https://github.com/MikeMcl/big.js/) constructor
+
+See [integration with big.js](#integration-bigjs).
 
 ### parse(expression)
 
@@ -238,8 +282,8 @@ Expression you want to parse, ex. `10 usd to pln` or `€1.23 eur`
 With `Cashify` constructor:
 
 ```diff
-- const fx = require('money');
-+ const {Cashify} = require('cashify');
+- import fx from 'money';
++ import {Cashify} from 'cashify';
 
 - fx.base = 'EUR';
 - fx.rates = {
@@ -263,8 +307,8 @@ With `Cashify` constructor:
 With `convert` function:
 
 ```diff
-- const fx = require('money');
-+ const {convert} = require('cashify');
+- import fx from 'money';
++ import {convert} from 'cashify';
 
 - fx.base = 'EUR';
 - fx.rates = {
@@ -290,8 +334,8 @@ When working with currencies, decimals only need to be precise up to the smalles
 Let's take a look at the following example:
 
 ```js
-const fx = require('money');
-const {Cashify} = require('cashify');
+import fx from 'money';
+import {Cashify} from 'cashify';
 
 const rates = {
 	GBP: 0.92,
@@ -309,14 +353,13 @@ cashify.convert(10, {from: 'EUR', to: 'GBP'}); //=> 9.2
 
 As you can see, money.js doesn't handle currencies correctly and therefore a floating point issues are occuring. Even though there's just a minor discrepancy between the results, if you're converting large amounts, that can add up.
 
-Cashify solves this problem the same way as [currency.js](https://github.com/scurker/currency.js/) - by working with integers behind the scenes. This should be okay for most reasonable values of currencies.
+Cashify solves this problem the same way as [currency.js](https://github.com/scurker/currency.js/) - by working with integers behind the scenes. **This should be okay for most reasonable values of currencies**; if you want to avoid all floating point issues, see [integration with big.js]().
 
 ## Related projects
 
-* [nestjs-cashify](https://github.com/vahidvdn/nestjs-cashify) - nodejs cashify module for nestjs
-* [currency.js](https://github.com/scurker/currency.js/) - Lightweight javascript library for working with currency values.
+* [nestjs-cashify](https://github.com/vahidvdn/nestjs-cashify) - Node.js Cashify module for Nest.js.
 * [cashify-rs](https://github.com/xxczaki/cashify-rs) - Cashify port for Rust.
 
 ## License
 
-MIT © [Antoni Kepinski](https://kepinski.me)
+MIT © [Antoni Kępiński](https://www.kepinski.ch)
