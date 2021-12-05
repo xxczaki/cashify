@@ -19,7 +19,7 @@ export default function parse(expression: string): Options {
 	let to;
 
 	// Search for separating keyword (case insensitive) to split the expression into 2 parts
-	if (/to|in|as/i.exec(expression)) {
+	if (/to|in|as/i.test(expression)) {
 		const firstPart = expression.slice(0, expression.search(/to|in|as/i)).toUpperCase().trim();
 
 		from = firstPart.replace(/[^A-Za-z]/g, '');
@@ -29,12 +29,12 @@ export default function parse(expression: string): Options {
 	}
 
 	if (Number.isNaN(amount) || expression.trim().length === 0) {
-		throw new TypeError('Could not parse the `amount` argument. Make sure it includes at least a valid amount.');
+		throw new Error('Could not parse the expression. Make sure it includes at least a valid amount.');
 	}
 
 	return {
 		amount,
 		from: from.toUpperCase() || undefined,
-		to
+		to,
 	};
 }
