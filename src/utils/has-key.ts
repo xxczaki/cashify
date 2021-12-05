@@ -1,4 +1,4 @@
-import {Rates} from '../lib/options';
+import {Rates} from '../lib/options.js';
 
 /**
  * Check if an object contains a key.
@@ -6,5 +6,5 @@ import {Rates} from '../lib/options';
  * @param key The key to check for.
 */
 export default function hasKey<T>(object: Rates, key: string | number | symbol): key is keyof T {
-	return key in object;
+	return Object.prototype.hasOwnProperty.call(object, key);
 }
