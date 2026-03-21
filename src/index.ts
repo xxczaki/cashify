@@ -1,5 +1,5 @@
-import Cashify from './cashify.js';
-import convert from './convert.js';
-import parse from './utils/parser.js';
+import Cashify from './cashify.ts';
+import convert from './convert.ts';
+import parse from './utils/parser.ts';
 
-export {Cashify, convert, parse};
+export { Cashify, convert, parse };

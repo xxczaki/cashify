@@ -1,12 +1,9 @@
-# Cashify 💸
+# Cashify
 
 > Lightweight currency conversion library, successor of money.js
 
-[![Build Status](https://github.com/xxczaki/cashify/workflows/CI/badge.svg)](https://github.com/xxczaki/cashify/actions?query=workflow%3ACI)
-[![Coverage Status](https://coveralls.io/repos/github/xxczaki/cashify/badge.svg?branch=master)](https://coveralls.io/github/xxczaki/cashify?branch=master)
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
-[![install size](https://packagephobia.now.sh/badge?p=cashify)](https://packagephobia.now.sh/result?p=cashify)
-![minified size](https://img.shields.io/bundlephobia/minzip/cashify)
+[![CI](https://github.com/xxczaki/cashify/actions/workflows/ci.yml/badge.svg)](https://github.com/xxczaki/cashify/actions/workflows/ci.yml)
+[![install size](https://packagephobia.com/badge?p=cashify)](https://packagephobia.com/result?p=cashify)
 [![Mentioned in Awesome Node.js](https://awesome.re/mentioned-badge.svg)](https://github.com/sindresorhus/awesome-nodejs)
 
 - [Motivation](#motivation)
@@ -17,24 +14,25 @@
 	- [Without constructor](#without-constructor)
 	- [Parsing](#parsing)
 	- [Integration with big.js](#integration-bigjs)
-	- [Integration with currency.js](#integration-currencyjs)
+	- [Formatting with Intl.NumberFormat](#formatting-with-intlnumberformat)
 - [API](#api)
 	- [Cashify({base, rates})](#cashifybase-rates)
 		- [base](#base)
 		- [rates](#rates)
 		- [BigJs](#bigjs)
 	- [convert(amount, {from, to, base, rates})](#convertamount-from-to-base-rates-with-and-without-constructor)
-        - [amount](#amount)
-        - [from](#from)
-        - [to](#to)
-        - [base](#base-1)
-        - [rates](#rates-1)
-        - [BigJs](#bigjs-1)
-    - [parse(expression)](#parseexpression)
-        - [expression](#expression)
+		- [amount](#amount)
+		- [from](#from)
+		- [to](#to)
+		- [base](#base-1)
+		- [rates](#rates-1)
+		- [BigJs](#bigjs-1)
+	- [parse(expression)](#parseexpression)
+		- [expression](#expression)
 - [Migrating from money.js](#migrating-from-moneyjs)
 - [Floating point issues](#floating-point-issues)
 - [Related projects](#related-projects)
+- [AI disclosure](#ai-disclosure)
 - [License](#license)
 
 ---
@@ -42,7 +40,7 @@
 ## Motivation
 
 This package was created, because the popular [money.js](http://openexchangerates.github.io/money.js/) library:
-* is not maintained (last commit was ~5 years ago)
+* is not maintained (last commit was over 10 years ago)
 * has over 20 open issues
 * does not support TypeScript
 * has implicit globals
@@ -52,8 +50,7 @@ This package was created, because the popular [money.js](http://openexchangerate
 ## Highlights
 
 - Simple API
-- 0 dependencies
-- Actively maintained
+- 0 runtime dependencies
 - Well tested and documented
 - [Easy migration from money.js](#migrating-from-moneyjs)
 - Written in TypeScript
@@ -62,10 +59,10 @@ This package was created, because the popular [money.js](http://openexchangerate
 ## Install
 
 ```
-$ npm install cashify
+$ pnpm add cashify
 ```
 
-**Please note that starting with version `3.0.0` this package is ESM-only and thus requires Node.js v14 or higher.**
+**This package is ESM-only and requires Node.js 24 or higher.**
 
 ## Usage
 
@@ -149,7 +146,7 @@ You can use `to`, `in` or `as` to separate the expression (case insensitive). Us
 
 ### Integration with [big.js](https://github.com/MikeMcl/big.js/)
 
-[big.js](https://github.com/scurker/currency.js/) is a small JavaScript library for arbitrary-precision decimal arithmetic. You can use it with cashify to make sure you won't run into floating point issues:
+[big.js](https://github.com/MikeMcl/big.js/) is a small JavaScript library for arbitrary-precision decimal arithmetic. You can use it with cashify to make sure you won't run into floating point issues:
 
 ```js
 import {Cashify} from 'cashify';
@@ -168,18 +165,15 @@ const result = cashify.convert(1, {
 	BigJs: Big
 });
 
-console.log(result); //=> 8.235 (without big.js you would get something like 0.8234999999999999)
+console.log(result); //=> 0.8235 (without big.js you would get something like 0.8234999999999999)
 ```
 
-<a id="integration-currencyjs"></a>
+### Formatting with [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
 
-### Integration with [currency.js](https://github.com/scurker/currency.js/)
-
-[currency.js](https://github.com/scurker/currency.js/) is a small and lightweight library for working with currency values. It integrates well with cashify. In the following example we are using it to format the conversion result:
+You can use the built-in `Intl.NumberFormat` API to format conversion results as currency strings:
 
 ```js
 import {Cashify} from 'cashify';
-import currency from 'currency.js';
 
 const rates = {
 	GBP: 0.92,
@@ -192,7 +186,7 @@ const cashify = new Cashify({base: 'EUR', rates});
 const converted = cashify.convert(8635619, {from: 'EUR', to: 'GBP'}); // => 7944769.48
 
 // Format the conversion result
-currency(converted, {symbol: '€', formatWithSymbol: true}).format(); // => €7,944,769.48
+new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'GBP'}).format(converted); // => '£7,944,769.48'
 ```
 
 ## API
@@ -334,7 +328,6 @@ When working with currencies, decimals only need to be precise up to the smalles
 Let's take a look at the following example:
 
 ```js
-import fx from 'money';
 import {Cashify} from 'cashify';
 
 const rates = {
@@ -342,24 +335,23 @@ const rates = {
 	USD: 1.12
 };
 
-fx.rates = rates;
-fx.base = 'EUR';
-
 const cashify = new Cashify({base: 'EUR', rates});
 
-fx.convert(10, {from: 'EUR', to: 'GBP'}); //=> 9.200000000000001
+// money.js would give: 9.200000000000001
 cashify.convert(10, {from: 'EUR', to: 'GBP'}); //=> 9.2
 ```
 
-As you can see, money.js doesn't handle currencies correctly and therefore a floating point issues are occuring. Even though there's just a minor discrepancy between the results, if you're converting large amounts, that can add up.
-
-Cashify solves this problem the same way as [currency.js](https://github.com/scurker/currency.js/) - by working with integers behind the scenes. **This should be okay for most reasonable values of currencies**; if you want to avoid all floating point issues, see [integration with big.js]().
+Cashify uses a simple rounding trick (`amount * 100 * rate / 100`) that avoids floating point errors in many common currency conversions. **This works well for most practical currency values**, but it is not a complete solution for all possible floating point edge cases. For guaranteed arbitrary-precision arithmetic, use the [big.js integration](#integration-bigjs).
 
 ## Related projects
 
-* [nestjs-cashify](https://github.com/vahidvdn/nestjs-cashify) - Node.js Cashify module for Nest.js.
-* [cashify-rs](https://github.com/xxczaki/cashify-rs) - Cashify port for Rust.
+* [nestjs-cashify](https://github.com/vahidvdn/nestjs-cashify) – Node.js Cashify module for Nest.js.
+* [cashify-rs](https://github.com/xxczaki/cashify-rs) – Cashify port for Rust.
+
+## AI disclosure
+
+This project contains code generated by Large Language Models (LLMs), under human supervision and proofreading.
 
 ## License
 
-MIT © [Antoni Kępiński](https://www.kepinski.ch)
+MIT © [Antoni Kępiński](https://xxczaki.com)
