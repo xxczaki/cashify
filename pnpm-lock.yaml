@@ -19,7 +19,7 @@ importers:
         specifier: ^2.30.0
         version: 2.30.0(@types/node@24.12.0)
       '@types/node':
-        specifier: ^24.0.0
+        specifier: ^24.12.0
         version: 24.12.0
       big.js:
         specifier: ^6.2.2
