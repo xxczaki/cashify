@@ -1,90 +1,73 @@
 {
-    "name": "cashify",
-    "version": "3.0.1",
-    "description": "Lightweight currency conversion library, successor of money.js",
-    "main": "dist/index.js",
-    "type": "module",
-    "types": "dist/index.d.ts",
-    "files": [
-        "dist/**/*"
-    ],
-    "author": "Antoni Kępiński <antoni@kepinski.ch> (https://www.kepinski.ch)",
-    "bugs": {
-        "url": "https://github.com/xxczaki/cashify/issues"
-    },
-    "scripts": {
-        "prebuild": "del-cli dist",
-        "build": "tsc",
-        "test": "xo && c8 --reporter=lcov ava",
-        "prepublishOnly": "npm run build"
-    },
-    "engines": {
-        "node": ">=14"
-    },
-    "license": "MIT",
-    "repository": "xxczaki/cashify",
-    "homepage": "https://github.com/xxczaki/cashify",
-    "funding": {
-        "type": "opencollective",
-        "url": "https://opencollective.com/cashify"
-    },
-    "keywords": [
-        "cashify",
-        "cash",
-        "moneyjs",
-        "money.js",
-        "money",
-        "conversion",
-        "exchange",
-        "currency-exchange",
-        "exchange-rates",
-        "open-exchange-rates",
-        "fixer",
-        "currencies",
-        "convert-currency-rates",
-        "replacement",
-        "convert-currencies",
-        "typescript",
-        "money-conversion"
-    ],
-    "devDependencies": {
-        "@sindresorhus/tsconfig": "^2.0.0",
-        "@types/node": "^16.11.6",
-        "ava": "^3.15.0",
-        "big.js": "^6.1.1",
-        "c8": "^7.10.0",
-        "coveralls": "^3.1.1",
-        "del-cli": "^4.0.1",
-        "ts-node": "^10.4.0",
-        "typescript": "^4.4.4",
-        "xo": "^0.46.4"
-    },
-    "sideEffects": false,
-    "ava": {
-        "extensions": {
-            "ts": "module"
-        },
-        "nonSemVerExperiments": {
-            "configurableModuleFormat": true
-        },
-        "nodeArguments": [
-            "--loader=ts-node/esm"
-        ]
-    },
-    "xo": {
-        "rules": {
-            "@typescript-eslint/naming-convention": "off"
-        }
-    },
-    "dependencies": {
-        "@types/big.js": "^6.1.2"
-    },
-    "peerDependencies": {
-        "big.js": ">=6.1.1"
-    },
-    "peerDependenciesMeta": {
-        "big.js": {
-            "optional": true
-        }
-    }
+	"name": "cashify",
+	"version": "4.0.0",
+	"description": "Lightweight currency conversion library, successor of money.js",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist/**/*"
+	],
+	"scripts": {
+		"prebuild": "rm -rf dist",
+		"build": "tsc",
+		"test": "node --test --experimental-test-coverage test.ts",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write .",
+		"prepublishOnly": "pnpm run build",
+		"changeset": "changeset",
+		"version-packages": "changeset version",
+		"release": "changeset publish"
+	},
+	"engines": {
+		"node": ">=24"
+	},
+	"packageManager": "pnpm@10.32.1",
+	"license": "MIT",
+	"repository": "xxczaki/cashify",
+	"homepage": "https://github.com/xxczaki/cashify",
+	"keywords": [
+		"cashify",
+		"cash",
+		"moneyjs",
+		"money.js",
+		"money",
+		"conversion",
+		"exchange",
+		"currency-exchange",
+		"exchange-rates",
+		"open-exchange-rates",
+		"fixer",
+		"currencies",
+		"convert-currency-rates",
+		"replacement",
+		"convert-currencies",
+		"typescript",
+		"money-conversion"
+	],
+	"devDependencies": {
+		"@biomejs/biome": "^2.0.0",
+		"@changesets/cli": "^2.29.0",
+		"@types/node": "^24.0.0",
+		"big.js": "^6.2.2",
+
+		"typescript": "^5.8.0"
+	},
+	"dependencies": {
+		"@types/big.js": "^6.2.2"
+	},
+	"peerDependencies": {
+		"big.js": ">=6.1.1"
+	},
+	"peerDependenciesMeta": {
+		"big.js": {
+			"optional": true
+		}
+	},
+	"sideEffects": false
 }
