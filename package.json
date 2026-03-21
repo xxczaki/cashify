@@ -62,7 +62,7 @@
 		"@types/big.js": "^6.2.2"
 	},
 	"peerDependencies": {
-		"big.js": ">=6.1.1"
+		"big.js": ">=6.2.2"
 	},
 	"peerDependenciesMeta": {
 		"big.js": {
