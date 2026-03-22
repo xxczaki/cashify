@@ -54,7 +54,7 @@
 		"@biomejs/biome": "^2.4.8",
 		"@changesets/cli": "^2.30.0",
 		"@types/node": "^24.12.0",
-		"big.js": "^6.2.2",
+		"big.js": "^7.0.1",
 
 		"typescript": "^5.9.3"
 	},
@@ -62,7 +62,7 @@
 		"@types/big.js": "^6.2.2"
 	},
 	"peerDependencies": {
-		"big.js": ">=6.2.2"
+		"big.js": ">=7.0.1"
 	},
 	"peerDependenciesMeta": {
 		"big.js": {
