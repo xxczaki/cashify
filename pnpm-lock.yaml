@@ -17,10 +17,10 @@ importers:
         version: 2.4.10
       '@changesets/cli':
         specifier: ^2.30.0
-        version: 2.30.0(@types/node@24.12.0)
+        version: 2.30.0(@types/node@24.12.2)
       '@types/node':
-        specifier: ^24.12.0
-        version: 24.12.0
+        specifier: ^24.12.2
+        version: 24.12.2
       big.js:
         specifier: ^7.0.1
         version: 7.0.1
@@ -179,8 +179,8 @@ packages:
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
 
-  '@types/node@24.12.0':
-    resolution: {integrity: sha512-GYDxsZi3ChgmckRT9HPU0WEhKLP08ev/Yfcq2AstjrDASOYCSXeyjDsHg4v5t4jOj7cyDX3vmprafKlWIG9MXQ==}
+  '@types/node@24.12.2':
+    resolution: {integrity: sha512-A1sre26ke7HDIuY/M23nd9gfB+nrmhtYyMINbjI1zHJxYteKR6qSMX56FsmjMcDb3SMcjJg5BiRRgOCC/yBD0g==}
 
   ansi-colors@4.1.3:
     resolution: {integrity: sha512-/6w/C21Pm1A7aZitlI5Ni/2J6FFQN8i1Cvz3kHABAAbw93v/NlvKdVOqz7CCWz/3iv/JplRSEEZ83XION15ovw==}
@@ -543,7 +543,7 @@ snapshots:
     dependencies:
       '@changesets/types': 6.1.0
 
-  '@changesets/cli@2.30.0(@types/node@24.12.0)':
+  '@changesets/cli@2.30.0(@types/node@24.12.2)':
     dependencies:
       '@changesets/apply-release-plan': 7.1.0
       '@changesets/assemble-release-plan': 6.0.9
@@ -559,7 +559,7 @@ snapshots:
       '@changesets/should-skip-package': 0.1.2
       '@changesets/types': 6.1.0
       '@changesets/write': 0.4.0
-      '@inquirer/external-editor': 1.0.3(@types/node@24.12.0)
+      '@inquirer/external-editor': 1.0.3(@types/node@24.12.2)
       '@manypkg/get-packages': 1.1.3
       ansi-colors: 4.1.3
       enquirer: 2.4.1
@@ -657,12 +657,12 @@ snapshots:
       human-id: 4.1.3
       prettier: 2.8.8
 
-  '@inquirer/external-editor@1.0.3(@types/node@24.12.0)':
+  '@inquirer/external-editor@1.0.3(@types/node@24.12.2)':
     dependencies:
       chardet: 2.1.1
       iconv-lite: 0.7.2
     optionalDependencies:
-      '@types/node': 24.12.0
+      '@types/node': 24.12.2
 
   '@manypkg/find-root@1.1.0':
     dependencies:
@@ -696,7 +696,7 @@ snapshots:
 
   '@types/node@12.20.55': {}
 
-  '@types/node@24.12.0':
+  '@types/node@24.12.2':
     dependencies:
       undici-types: 7.16.0
 
