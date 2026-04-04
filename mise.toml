@@ -4,7 +4,7 @@ min_version = "2025.1.0"
 experimental = true
 
 [tools]
-node = "24"
+node = "24.14.1"
 
 [env]
 _.path = ["{{config_root}}/node_modules/.bin"]
