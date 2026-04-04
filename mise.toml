@@ -1,0 +1,13 @@
+min_version = "2025.1.0"
+
+[settings]
+experimental = true
+
+[tools]
+node = "24"
+
+[env]
+_.path = ["{{config_root}}/node_modules/.bin"]
+
+[hooks]
+postinstall = "corepack enable && pnpm install"
