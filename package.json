@@ -25,7 +25,7 @@
 		"release": "changeset publish"
 	},
 	"engines": {
-		"node": ">=24.14.1"
+		"node": ">=24.15.0"
 	},
 	"packageManager": "pnpm@10.33.0",
 	"license": "MIT",
