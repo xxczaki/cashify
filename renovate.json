@@ -1,13 +1,5 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"timezone": "Europe/Berlin",
-	"extends": ["config:recommended", "customManagers:biomeVersions"],
-	"rangeStrategy": "bump",
-	"packageRules": [
-		{
-			"description": "Automerge non-major updates",
-			"matchUpdateTypes": ["minor", "patch"],
-			"automerge": true
-		}
-	]
+	"extends": ["github>xxczaki/renovate-config", "customManagers:biomeVersions"],
+	"rangeStrategy": "bump"
 }
