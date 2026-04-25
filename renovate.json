@@ -1,5 +1,4 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["github>xxczaki/renovate-config", "customManagers:biomeVersions"],
-	"rangeStrategy": "bump"
+	"extends": ["github>xxczaki/renovate-config", "customManagers:biomeVersions"]
 }
