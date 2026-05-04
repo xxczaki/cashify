@@ -27,7 +27,7 @@
 	"engines": {
 		"node": ">=24.15.0"
 	},
-	"packageManager": "pnpm@10.33.2",
+	"packageManager": "pnpm@10.33.3",
 	"license": "MIT",
 	"repository": "xxczaki/cashify",
 	"homepage": "https://github.com/xxczaki/cashify",
