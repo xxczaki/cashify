@@ -53,7 +53,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.14",
 		"@changesets/cli": "^2.31.0",
-		"@types/node": "^24.12.2",
+		"@types/node": "^24.12.3",
 		"big.js": "^7.0.1",
 
 		"typescript": "^5.9.3"
