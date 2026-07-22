@@ -51,7 +51,7 @@
 		"money-conversion"
 	],
 	"devDependencies": {
-		"@biomejs/biome": "^2.5.4",
+		"@biomejs/biome": "^2.5.5",
 		"@changesets/cli": "^2.31.1",
 		"@types/node": "^24.13.3",
 		"big.js": "^7.0.1",
