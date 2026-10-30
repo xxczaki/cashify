@@ -25,7 +25,7 @@
 		"release": "changeset publish"
 	},
 	"engines": {
-		"node": ">=24.22.2"
+		"node": ">=26.13.0"
 	},
 	"packageManager": "pnpm@10.34.9",
 	"license": "MIT",
@@ -53,7 +53,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.6.3",
 		"@changesets/cli": "^2.31.1",
-		"@types/node": "^24.19.2",
+		"@types/node": "^26.6.5",
 		"big.js": "^7.0.1",
 
 		"typescript": "^5.9.3"
