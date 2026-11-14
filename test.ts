@@ -27,6 +27,29 @@ describe('parse', () => {
 			to: 'PLN',
 		});
 	});
+
+	it('does not split on "in", "to" or "as" inside a currency code', () => {
+		assert.deepStrictEqual(parse('10 INR to EUR'), {
+			amount: 10,
+			from: 'INR',
+			to: 'EUR',
+		});
+		assert.deepStrictEqual(parse('10 TOP in USD'), {
+			amount: 10,
+			from: 'TOP',
+			to: 'USD',
+		});
+		assert.deepStrictEqual(parse('10 EUR as INR'), {
+			amount: 10,
+			from: 'EUR',
+			to: 'INR',
+		});
+		assert.deepStrictEqual(parse('10 inr'), {
+			amount: 10,
+			from: 'INR',
+			to: undefined,
+		});
+	});
 });
 
 describe('convert', () => {
