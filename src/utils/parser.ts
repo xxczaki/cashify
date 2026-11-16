@@ -1,4 +1,4 @@
-const SEPARATOR_PATTERN = /to|in|as/i;
+const SEPARATOR_PATTERN = /\b(?:to|in|as)\b/i;
 
 interface ParseResult {
 	amount: number;
